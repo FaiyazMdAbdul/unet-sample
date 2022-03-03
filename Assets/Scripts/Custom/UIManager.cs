@@ -9,6 +9,15 @@ public class UIManager : MonoBehaviour
     NetworkManager manager;
 
     [SerializeField] GameObject loginPanel;
+    [SerializeField] PlayableDirector shootTimeline;
+
+    [SerializeField] Animator animator;
+     [SerializeField] NetworkAnimator networkAnimator;
+
+     public enum AnimStates
+    {
+        WALK, RUN, IDLE,FLIP, JUMP, FALL, ATTACK, HIT, DEAD
+    }
 
     private void Start()
     {
@@ -28,13 +37,26 @@ public class UIManager : MonoBehaviour
         loginPanel.SetActive(false);
     }
 
-   [SerializeField] PlayableDirector shootTimeline;
 
-    [SerializeField] Animator animator;
-    public void ShootSequence()
+    public void ShootSequence() 
     {
-        animator.gameObject.GetComponent<NetworkAnimator>().SetTrigger("shoot");
+        networkAnimator.SetTrigger("shoot"); // TODO Change to Switch case  to handle different animations 
         //animator.SetTrigger("shoot");
     }
+
+     void SwitchAnim(AnimStates state)
+    {
+        string animName = "idle";
+        switch (state)
+        {
+            case AnimStates.IDLE:
+                animName = "idle";
+                break;
+        }
+
+        //play animation in IRNumerator and wait until animation finished or use invoke for looping animation
+
+    }
+
 
 }
